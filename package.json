@@ -1,0 +1,42 @@
+{
+  "name": "web-starter",
+  "version": "1.0.0",
+  "description": "Basic template for starting out a new web project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/velchevski/web-starter.git"
+  },
+  "keywords": [
+    "template",
+    "web",
+    "gulp",
+    "ES6",
+    "babel",
+    "scss",
+    "transpile",
+    "autoprefix"
+  ],
+  "author": "Martin Velchevski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/velchevski/web-starter/issues"
+  },
+  "homepage": "https://github.com/velchevski/web-starter#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "browser-sync": "^2.11.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-changed": "^1.3.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-jade": "^1.1.0",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-sass-glob": "0.0.8"
+  }
+}

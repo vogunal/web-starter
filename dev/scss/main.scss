@@ -1,0 +1,10 @@
+@import 'vendors/*.scss';
+@import 'utils/*.scss';
+@import 'base/*.scss';
+@import 'layout/*.scss';
+@import 'components/*.scss';
+@import 'pages/*.scss';
+
+body {
+    font-family: sans-serif;
+}
