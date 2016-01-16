@@ -12,7 +12,7 @@ var paths = {
     cssFolder: 'build/css',
     jadeFolder: 'dev/**/*.jade',
     htmlFolder: 'build',
-    imageSource: 'dev/img',
+    imageSource: 'dev/img/*',
     imageDestination: 'build/img',
     jsFiles: 'dev/js/**/*.js',
     jsMain: 'dev/js/*.js',
@@ -24,9 +24,9 @@ var paths = {
 
 // Compile JADE
 gulp.task('jade', function() {
-  gulp.src(paths.jadeFolder)
+  gulp.src("dev/index.jade")
     .pipe($.jade({
-
+        pretty: true
     }))
     .pipe(gulp.dest(paths.build))
     .pipe(browserSync.stream());
@@ -57,8 +57,17 @@ gulp.task('js', function() {
 });
 
 // Minify Images
+gulp.task('imageMin', function() {
+    gulp.src(paths.imageSource)
+        .pipe($.imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}]
+        }))
+        .pipe(gulp.dest(paths.imageDestination))
+});
 
-// BrowserSync
+
+// BrowserSync & Watch Tasks
 gulp.task('serve', function() {
     browserSync.init({
         server: {
@@ -73,7 +82,7 @@ gulp.task('serve', function() {
 
 
 // Default Task
-
-// Watch Task
+gulp.task('default', ['serve']);
 
 // Build Task
+gulp.task('build', ['jade', 'sass', 'js', 'imageMin']);
