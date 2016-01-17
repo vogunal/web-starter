@@ -3,6 +3,8 @@ var gulp = require('gulp');
 var $ = require('gulp-load-plugins')()
 var sassGlob = require('gulp-sass-glob');
 var browserSync = require('browser-sync').create();
+var webpack = require('webpack-stream');
+var stylish = require('jshint-stylish');
 
 // Folders and Files
 var paths = {
@@ -16,11 +18,11 @@ var paths = {
     imageDestination: 'build/img',
     jsFiles: 'dev/js/**/*.js',
     jsMain: 'dev/js/*.js',
+    jsDevFolder: 'dev/js/',
     jsVendor: 'dev/js/vendor/**/*.js',
     jsDestination: 'build/js',
     build: 'build'
 };
-
 
 // Compile JADE
 gulp.task('jade', function() {
@@ -49,11 +51,31 @@ gulp.task('sass', function () {
 // Handle JS
 gulp.task('js', function() {
     gulp.src(paths.jsMain)
-        .pipe($.babel({
-            presets: ['es2015']
-        }))
-        .pipe($.concat('main.js'))
-        .pipe(gulp.dest(paths.jsDestination));
+        .pipe($.jshint())
+        .pipe($.jshint.reporter(stylish))
+        .pipe(webpack(require(__dirname + '/webpack.config.js')))
+        // .pipe(webpack(require(__dirname + '/webpack.config.js'), {
+        //
+        // }, null, function(err, stats) {
+        //
+        // }))
+        .pipe(gulp.dest(paths.jsDestination))
+        .pipe(browserSync.stream());
+});
+
+// Webpack Stuff
+gulp.task('webpack', function() {
+  gulp.src('dev/js')
+    .pipe(webpack({
+        resolve: {
+            root: path.resolve('dev/js')
+        },
+        entry: 'main.js',
+        output: {
+            filename: 'bundle.js'
+        },
+    }))
+    .pipe(gulp.dest(paths.jsDestination));
 });
 
 // Minify Images

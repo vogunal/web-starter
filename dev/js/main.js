@@ -1,4 +1,4 @@
-const greet = (greetingMessage) => {
-    console.log(greetingMessage);
-}
-greet("Babel works!");
+// import { writeTitle } from 'test';
+import * as test from 'test';
+
+test.writeTitle("Webpack is working.");
