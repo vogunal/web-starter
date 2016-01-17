@@ -8,20 +8,20 @@ var stylish = require('jshint-stylish');
 
 // Folders and Files
 var paths = {
-    dev: 'dev',
-    scssFiles: 'dev/scss/**/*.scss',
-    scssFolder: 'dev/scss',
-    cssFolder: 'build/css',
-    jadeFolder: 'dev/**/*.jade',
-    htmlFolder: 'build',
-    imageSource: 'dev/img/*',
-    imageDestination: 'build/img',
-    jsFiles: 'dev/js/**/*.js',
-    jsMain: 'dev/js/*.js',
-    jsDevFolder: 'dev/js/',
-    jsVendor: 'dev/js/vendor/**/*.js',
-    jsDestination: 'build/js',
-    build: 'build'
+  dev: 'dev',
+  scssFiles: 'dev/scss/**/*.scss',
+  scssFolder: 'dev/scss',
+  cssFolder: 'build/css',
+  jadeFolder: 'dev/**/*.jade',
+  htmlFolder: 'build',
+  imageSource: 'dev/img/*',
+  imageDestination: 'build/img',
+  jsFiles: 'dev/js/**/*.js',
+  jsMain: 'dev/js/*.js',
+  jsDevFolder: 'dev/js/',
+  jsVendor: 'dev/js/vendor/**/*.js',
+  jsDestination: 'build/js',
+  build: 'build'
 };
 
 // Compile JADE
@@ -53,29 +53,11 @@ gulp.task('js', function() {
     gulp.src(paths.jsMain)
         .pipe($.jshint())
         .pipe($.jshint.reporter(stylish))
-        .pipe(webpack(require(__dirname + '/webpack.config.js')))
-        // .pipe(webpack(require(__dirname + '/webpack.config.js'), {
-        //
-        // }, null, function(err, stats) {
-        //
-        // }))
+        .pipe(webpack(require(__dirname + '/webpack.config.js'))).on('error', function(err) {
+            console.log(err);
+        })
         .pipe(gulp.dest(paths.jsDestination))
         .pipe(browserSync.stream());
-});
-
-// Webpack Stuff
-gulp.task('webpack', function() {
-  gulp.src('dev/js')
-    .pipe(webpack({
-        resolve: {
-            root: path.resolve('dev/js')
-        },
-        entry: 'main.js',
-        output: {
-            filename: 'bundle.js'
-        },
-    }))
-    .pipe(gulp.dest(paths.jsDestination));
 });
 
 // Minify Images
